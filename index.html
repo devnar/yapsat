@@ -1,0 +1,549 @@
+<!DOCTYPE html>
+<html lang="tr">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link href="https://cdn.boxicons.com/fonts/basic/boxicons.min.css" rel="stylesheet" />
+        <link rel="shortcut icon" href="https://img.icons8.com/?size=96&id=77118&format=png" type="image/x-icon">
+        <title>YapSat</title>
+        <meta name="description" content="Paket al, tek tek sat, kârını katla!">
+        <script src="https://cdn.tailwindcss.com"></script>
+        <script>
+            tailwind.config = {
+                theme: {
+                    extend: {
+                        colors: {
+                            primary: "#6366f1",
+                            secondary: "#f59e0b",
+                            accent: "#10b981",
+                        },
+                    },
+                },
+            };
+        </script>
+    </head>
+    <body class="bg-gray-900 text-white font-sans">
+        <!-- Header -->
+        <header class="bg-gray-800 border-b border-gray-700 px-6 py-4 fixed top-0 left-0 right-0 z-40">
+            <div class="flex justify-between items-center">
+                <div class="flex items-center space-x-4">
+                    <div class="flex items-center space-x-2">
+                        <div>
+                            <h1 class="text-xl font-bold text-white">YapSat</h1>
+                            <p class="text-sm text-gray-400">Seviye 12</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-6">
+                    <div class="flex items-center space-x-2 bg-secondary/20 px-3 py-1 rounded-full">
+                        <span class="text-secondary">💰</span>
+                        <span class="font-bold text-secondary" id="money">25450</span>
+                    </div>
+                    <div class="flex items-center space-x-2 bg-accent/20 px-3 py-1 rounded-full">
+                        <span class="text-accent">💎</span>
+                        <span class="font-bold text-accent">127</span>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <!-- Left Dock -->
+        <nav class="fixed left-0 top-20 bottom-0 w-16 bg-gray-800 border-r border-gray-700 z-30">
+            <div class="flex flex-col items-center py-2 space-y-4">
+                <button onclick="switchTab('home')" class="nav-btn active w-10 h-10 bg-primary rounded-lg flex items-center justify-center hover:bg-primary/80 transition-colors">
+                    <span class="text-xl"><i class="bx bx-store"></i></span>
+                </button>
+                <button onclick="switchTab('wholesale')" class="nav-btn w-10 h-10 bg-gray-700 rounded-lg flex items-center justify-center hover:bg-gray-600 transition-colors">
+                    <span class="text-xl"><i class="bx bx-cart"></i></span>
+                </button>
+                <button onclick="switchTab('kitchen')" class="nav-btn w-10 h-10 bg-gray-700 rounded-lg flex items-center justify-center hover:bg-gray-600 transition-colors">
+                    <span class="text-xl"><i class="bx bx-chef-hat"></i></span>
+                </button>
+                <button onclick="switchTab('menu')" class="nav-btn w-10 h-10 bg-gray-700 rounded-lg flex items-center justify-center hover:bg-gray-600 transition-colors">
+                    <span class="text-xl"><i class="bx bx-food-menu"></i></span>
+                </button>
+                <button onclick="switchTab('upgrades')" class="nav-btn w-10 h-10 bg-gray-700 rounded-lg flex items-center justify-center hover:bg-gray-600 transition-colors">
+                    <span class="text-xl"><i class="bx bx-diamond"></i></span>
+                </button>
+            </div>
+        </nav>
+
+        <!-- Main Content -->
+        <main class="ml-16 mt-16 p-6">
+            <div class="max-w-7xl mx-auto">
+                <!-- Home Tab -->
+                <div id="home" class="tab-content">
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                        <!-- Restaurant Status -->
+                        <div class="space-y-6">
+                            <h2 class="text-2xl font-bold text-white mb-4">Restoran Durumu</h2>
+                            <div class="grid grid-cols-2 gap-4">
+                                <div class="bg-gray-800 rounded-xl p-6 border border-gray-700">
+                                    <div class="flex items-center justify-between mb-4">
+                                        <h3 class="text-lg font-semibold">Günlük Gelir</h3>
+                                        <span class="text-2xl">💰</span>
+                                    </div>
+                                    <p class="text-3xl font-bold text-secondary" id="dailyIncome">₺0</p>
+                                    <p class="text-sm text-gray-400 mt-2">Bugün kazanılan</p>
+                                </div>
+                                <div class="bg-gray-800 rounded-xl p-6 border border-gray-700">
+                                    <div class="flex items-center justify-between mb-4">
+                                        <h3 class="text-lg font-semibold">Müşteri Sayısı</h3>
+                                        <span class="text-2xl">👥</span>
+                                    </div>
+                                    <p class="text-3xl font-bold text-accent" id="customerCount">0</p>
+                                    <p class="text-sm text-gray-400 mt-2">Bugün servis yapılan</p>
+                                </div>
+                                <div class="bg-gray-800 rounded-xl p-6 border border-gray-700">
+                                    <div class="flex items-center justify-between mb-4">
+                                        <h3 class="text-lg font-semibold">Aktif Siparişler</h3>
+                                        <span class="text-2xl">📋</span>
+                                    </div>
+                                    <p class="text-3xl font-bold text-yellow-400" id="activeOrders">0</p>
+                                    <p class="text-sm text-gray-400 mt-2">Bekleyen sipariş</p>
+                                </div>
+                                <div class="bg-gray-800 rounded-xl p-6 border border-gray-700">
+                                    <div class="flex items-center justify-between mb-4">
+                                        <h3 class="text-lg font-semibold">Envanter</h3>
+                                        <span class="text-2xl">📦</span>
+                                    </div>
+                                    <p class="text-3xl font-bold text-blue-400" id="inventoryStatus">Düşük</p>
+                                    <p class="text-sm text-gray-400 mt-2">Malzeme durumu</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Customers -->
+                        <div class="space-y-6">
+                            <h2 class="text-2xl font-bold text-white mb-4">Müşteriler</h2>
+                            <div id="customerList" class="space-y-4">
+                                <!-- Customers will be dynamically added here -->
+                            </div>
+                            <button onclick="addCustomer()" class="w-full bg-primary hover:bg-primary/80 text-white font-semibold py-3 px-6 rounded-lg transition-colors">
+                                Yeni Müşteri Ekle
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Wholesale Tab -->
+                <div id="wholesale" class="tab-content hidden">
+                    <h2 class="text-2xl font-bold text-white mb-6">Hal - Malzeme Satın Al</h2>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-6" id="wholesaleItems">
+                        <!-- Wholesale items will be dynamically generated -->
+                    </div>
+                    <div class="mt-6 bg-gray-800 rounded-xl p-6 border border-gray-700">
+                        <h3 class="text-lg font-semibold mb-4">Sepet</h3>
+                        <div id="cart" class="space-y-2 mb-4">
+                            <p class="text-gray-400">Sepet boş</p>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="text-xl font-bold">Toplam: ₺<span id="cartTotal">0</span></span>
+                            <button onclick="buyItems()" class="bg-accent hover:bg-accent/80 text-white font-semibold py-2 px-6 rounded-lg transition-colors">
+                                Satın Al
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Kitchen Tab -->
+                <div id="kitchen" class="tab-content hidden">
+                    <h2 class="text-2xl font-bold text-white mb-6">Mutfak</h2>
+                    <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                        <div>
+                            <h3 class="text-xl font-semibold mb-4">Bekleyen Siparişler</h3>
+                            <div id="pendingOrders" class="space-y-4">
+                                <!-- Pending orders will be shown here -->
+                            </div>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-semibold mb-4">Hazır Ürünler</h3>
+                            <div id="readyProducts" class="space-y-4">
+                                <!-- Ready products will be shown here -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Menu Tab -->
+                <div id="menu" class="tab-content hidden">
+                    <h2 class="text-2xl font-bold text-white mb-6">Menü</h2>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <div class="bg-gray-800 rounded-xl p-6 border border-gray-700">
+                            <div class="flex items-center space-x-4 mb-4">
+                                <span class="text-4xl">🍋</span>
+                                <div>
+                                    <h3 class="text-xl font-semibold">Limonata</h3>
+                                    <p class="text-secondary font-bold">₺25</p>
+                                </div>
+                            </div>
+                            <div class="text-sm text-gray-400 space-y-1">
+                                <p>Gerekli malzemeler:</p>
+                                <p>• Su: 2 adet</p>
+                                <p>• Limon: 5 adet</p>
+                                <p>• Şeker: 3 adet</p>
+                                <p>• Buz: 1 adet</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+
+        <script>
+            // Game State
+            let gameState = {
+                money: 100,
+                dailyIncome: 0,
+                customerCount: 0,
+                customers: [],
+                inventory: {
+                    su: 10,
+                    limon: 10,
+                    seker: 100,
+                    buz: 10
+                },
+                cart: {},
+                orders: [],
+                readyProducts: []
+            };
+
+            // Wholesale items
+            const wholesaleItems = {
+                su:    { name: 'Su (19lt)',     packSize: 19, unit: 'lt',   price: 19, emoji: '💧' },
+                limon: { name: 'Limon (10lu)',  packSize: 10, unit: 'adet', price: 40, emoji: '🍋' },
+                seker: { name: 'Şeker (200gr)', packSize: 200, unit: 'gr',  price: 10, emoji: '🍯' },
+                buz:   { name: 'Buz (5li)',     packSize: 5,  unit: 'adet', price: 15, emoji: '🧊' }
+            };
+
+            // Recipes
+            const recipes = {
+                limonata: {
+                    name: 'Limonata',
+                    price: 25,
+                    ingredients: { su: 2, limon: 4, seker: 30, buz: 1 },
+                    emoji: '🍋'
+                }
+            };
+
+            // Initialize game
+            function initGame() {
+                updateUI();
+                renderWholesaleItems();
+                // Add first customer after 2 seconds
+                setTimeout(() => addCustomer(), 2000);
+            }
+
+            // Update UI elements
+            function updateUI() {
+                document.getElementById('money').textContent = gameState.money;
+                document.getElementById('dailyIncome').textContent = `₺${gameState.dailyIncome}`;
+                document.getElementById('customerCount').textContent = gameState.customerCount;
+                document.getElementById('activeOrders').textContent = gameState.orders.length;
+                
+                // Update inventory status
+                const totalItems = Object.values(gameState.inventory).reduce((a, b) => a + b, 0);
+                document.getElementById('inventoryStatus').textContent = totalItems < 20 ? 'Düşük' : totalItems < 50 ? 'Orta' : 'İyi';
+            }
+
+            // Add customer
+            function addCustomer() {
+                const customerNames = ['Ahmet', 'Ayşe', 'Mehmet', 'Fatma', 'Ali', 'Zeynep', 'Mustafa', 'Elif'];
+                const customer = {
+                    id: Date.now(),
+                    name: customerNames[Math.floor(Math.random() * customerNames.length)],
+                    order: null,
+                    status: 'waiting' // waiting, ordered, served
+                };
+                
+                gameState.customers.push(customer);
+                renderCustomers();
+                
+                // Customer automatically orders after 3 seconds
+                setTimeout(() => {
+                    if (customer.status === 'waiting') {
+                        customer.order = 'limonata';
+                        customer.status = 'ordered';
+                        gameState.orders.push({
+                            customerId: customer.id,
+                            product: 'limonata',
+                            status: 'pending'
+                        });
+                        renderCustomers();
+                        renderOrders();
+                        updateUI();
+                    }
+                }, 3000);
+            }
+
+            // Render customers
+            function renderCustomers() {
+                const customerList = document.getElementById('customerList');
+                customerList.innerHTML = '';
+                
+                gameState.customers.forEach(customer => {
+                    const customerDiv = document.createElement('div');
+                    customerDiv.className = `bg-gray-800 rounded-xl p-4 border border-gray-700`;
+                    
+                    let statusColor = 'text-yellow-400';
+                    let statusText = 'Bekliyor';
+                    let actionButton = '';
+                    
+                    if (customer.status === 'ordered') {
+                        statusColor = 'text-orange-400';
+                        statusText = 'Sipariş verdi: Limonata';
+                    } else if (customer.status === 'served') {
+                        statusColor = 'text-green-400';
+                        statusText = 'Servis edildi';
+                        actionButton = `<button onclick="customerLeave(${customer.id})" class="mt-2 bg-green-600 hover:bg-green-700 text-white text-sm py-1 px-3 rounded">Müşteri Ayrıldı</button>`;
+                    }
+                    
+                    customerDiv.innerHTML = `
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-3">
+                                <span class="text-2xl">👤</span>
+                                <div>
+                                    <h4 class="font-semibold">${customer.name}</h4>
+                                    <p class="text-sm ${statusColor}">${statusText}</p>
+                                </div>
+                            </div>
+                        </div>
+                        ${actionButton}
+                    `;
+                    
+                    customerList.appendChild(customerDiv);
+                });
+            }
+
+            // Customer leaves
+            function customerLeave(customerId) {
+                gameState.customers = gameState.customers.filter(c => c.id !== customerId);
+                renderCustomers();
+                
+                // Add new customer after some time
+                setTimeout(() => addCustomer(), Math.random() * 10000 + 5000);
+            }
+
+            // Render wholesale items
+            function renderWholesaleItems() {
+                const container = document.getElementById('wholesaleItems');
+                container.innerHTML = '';
+                
+                Object.keys(wholesaleItems).forEach(key => {
+                    const item = wholesaleItems[key];
+                    const itemDiv = document.createElement('div');
+                    itemDiv.className = 'bg-gray-800 rounded-xl p-6 border border-gray-700';
+                    itemDiv.innerHTML = `
+                        <div class="text-center mb-4">
+                            <span class="text-4xl">${item.emoji}</span>
+                            <h3 class="text-lg font-semibold mt-2">${item.name}</h3>
+                        </div>
+                        <p class="text-sm text-gray-400 mb-1">Envanterim: ${gameState.inventory[key]} ${item.unit}</p>
+                        <p class="text-xs text-gray-500 mb-1">Paket: ${item.packSize} ${item.unit}</p>
+                        <p class="text-2xl font-bold text-orange-400 mb-4">₺${item.price}</p>
+                        <div class="flex items-center justify-center gap-3">
+                            <button onclick="updateCart('${key}', -1)" class="px-3 py-1 bg-gray-700 rounded-lg border border-gray-600 hover:bg-gray-600">−</button>
+                            <span class="text-lg font-semibold w-8 text-center" id="cart-${key}">0</span>
+                            <button onclick="updateCart('${key}', 1)" class="px-3 py-1 bg-gray-700 rounded-lg border border-gray-600 hover:bg-gray-600">+</button>
+                        </div>
+                    `;
+                    container.appendChild(itemDiv);
+                });
+            }
+
+            // Update cart
+            function updateCart(item, change) {
+                if (!gameState.cart[item]) gameState.cart[item] = 0;
+                gameState.cart[item] = Math.max(0, gameState.cart[item] + change);
+                
+                document.getElementById(`cart-${item}`).textContent = gameState.cart[item];
+                renderCart();
+            }
+
+            // Render cart
+            function renderCart() {
+                const cartDiv = document.getElementById('cart');
+                const cartItems = Object.keys(gameState.cart).filter(key => gameState.cart[key] > 0);
+                
+                if (cartItems.length === 0) {
+                    cartDiv.innerHTML = '<p class="text-gray-400">Sepet boş</p>';
+                    document.getElementById('cartTotal').textContent = '0';
+                    return;
+                }
+                
+                let total = 0;
+                cartDiv.innerHTML = cartItems.map(key => {
+                    const quantity = gameState.cart[key];
+                    const price = wholesaleItems[key].price * quantity;
+                    total += price;
+                    return `<div class="flex justify-between"><span>${wholesaleItems[key].name} x${quantity}</span><span>₺${price}</span></div>`;
+                }).join('');
+                
+                document.getElementById('cartTotal').textContent = total;
+            }
+
+            // Buy items
+            function buyItems() {
+                const total = parseInt(document.getElementById('cartTotal').textContent);
+                if (total === 0) return;
+                
+                if (gameState.money >= total) {
+                    gameState.money -= total;
+                    
+                    Object.keys(gameState.cart).forEach(key => {
+                        if (gameState.cart[key] > 0) {
+                            gameState.inventory[key] += wholesaleItems[key].packSize * gameState.cart[key];
+                            gameState.cart[key] = 0;
+                        }
+                    });
+                    
+                    updateUI();
+                    renderWholesaleItems();
+                    renderCart();
+                    alert('Malzemeler satın alındı!');
+                } else {
+                    alert('Yetersiz para!');
+                }
+            }
+
+            // Render orders
+            function renderOrders() {
+                const pendingDiv = document.getElementById('pendingOrders');
+                const readyDiv = document.getElementById('readyProducts');
+                
+                const pendingOrders = gameState.orders.filter(o => o.status === 'pending');
+                const readyOrders = gameState.readyProducts;
+                
+                // Pending orders
+                if (pendingOrders.length === 0) {
+                    pendingDiv.innerHTML = '<p class="text-gray-400">Bekleyen sipariş yok</p>';
+                } else {
+                    pendingDiv.innerHTML = pendingOrders.map(order => {
+                        const customer = gameState.customers.find(c => c.id === order.customerId);
+                        const recipe = recipes[order.product];
+                        const canMake = Object.keys(recipe.ingredients).every(ing => 
+                            gameState.inventory[ing] >= recipe.ingredients[ing]
+                        );
+
+                        
+                        return `
+                            <div class="bg-gray-800 rounded-xl p-4 border border-gray-700">
+                                <div class="flex items-center justify-between mb-2">
+                                    <h4 class="font-semibold">${customer?.name} - ${recipe.name}</h4>
+                                    <span class="text-2xl">${recipe.emoji}</span>
+                                </div>
+                                <div class="text-sm text-gray-400 mb-3">
+                                    ${Object.keys(recipe.ingredients).map(ing => 
+                                        `<p class="${gameState.inventory[ing] >= recipe.ingredients[ing] ? 'text-green-400' : 'text-red-400'}">
+                                            ${wholesaleItems[ing].name}: ${recipe.ingredients[ing]} (Var: ${gameState.inventory[ing]})
+                                        </p>`
+                                    ).join('')}
+                                </div>
+                                <button onclick="makeProduct(${order.customerId}, '${order.product}')" 
+                                        ${!canMake ? 'disabled' : ''} 
+                                        class="w-full ${canMake ? 'bg-accent hover:bg-accent/80' : 'bg-gray-600 cursor-not-allowed'} text-white font-semibold py-2 px-4 rounded-lg transition-colors">
+                                    ${canMake ? 'Hazırla' : 'Malzeme Yetersiz'}
+                                </button>
+                            </div>
+                        `;
+                    }).join('');
+                }
+                
+                // Ready products
+                if (readyOrders.length === 0) {
+                    readyDiv.innerHTML = '<p class="text-gray-400">Hazır ürün yok</p>';
+                } else {
+                    readyDiv.innerHTML = readyOrders.map(product => {
+                        const customer = gameState.customers.find(c => c.id === product.customerId);
+                        const recipe = recipes[product.product];
+                        
+                        return `
+                            <div class="bg-gray-800 rounded-xl p-4 border border-green-700">
+                                <div class="flex items-center justify-between mb-2">
+                                    <h4 class="font-semibold">${customer?.name} - ${recipe.name}</h4>
+                                    <span class="text-2xl">${recipe.emoji}</span>
+                                </div>
+                                <button onclick="serveProduct(${product.customerId}, '${product.product}')" 
+                                        class="w-full bg-green-600 hover:bg-green-700 text-white font-semibold py-2 px-4 rounded-lg transition-colors">
+                                    Servis Et
+                                </button>
+                            </div>
+                        `;
+                    }).join('');
+                }
+            }
+
+            // Make product
+            function makeProduct(customerId, product) {
+                const recipe = recipes[product];
+                
+                // Check ingredients
+                const canMake = Object.keys(recipe.ingredients).every(ing => 
+                    gameState.inventory[ing] >= recipe.ingredients[ing]
+                );
+                
+                if (!canMake) {
+                    alert('Yetersiz malzeme!');
+                    return;
+                }
+                
+                // Use ingredients
+                Object.keys(recipe.ingredients).forEach(ing => {
+                    gameState.inventory[ing] -= recipe.ingredients[ing];
+                });
+                
+                // Remove from orders and add to ready products
+                gameState.orders = gameState.orders.filter(o => o.customerId !== customerId);
+                gameState.readyProducts.push({ customerId, product });
+                
+                updateUI();
+                renderOrders();
+                renderWholesaleItems();
+            }
+
+            // Serve product
+            function serveProduct(customerId, product) {
+                const customer = gameState.customers.find(c => c.id === customerId);
+                const recipe = recipes[product];
+                
+                if (customer) {
+                    customer.status = 'served';
+                    gameState.money += recipe.price;
+                    gameState.dailyIncome += recipe.price;
+                    gameState.customerCount++;
+                }
+                
+                gameState.readyProducts = gameState.readyProducts.filter(p => p.customerId !== customerId);
+                
+                updateUI();
+                renderCustomers();
+                renderOrders();
+            }
+
+            // Tab switching
+            function switchTab(tabName) {
+                const tabContents = document.querySelectorAll(".tab-content");
+                tabContents.forEach((tab) => tab.classList.add("hidden"));
+
+                document.getElementById(tabName).classList.remove("hidden");
+
+                const navButtons = document.querySelectorAll(".nav-btn");
+                navButtons.forEach((btn) => {
+                    btn.classList.remove("active", "bg-primary");
+                    btn.classList.add("bg-gray-700");
+                });
+
+                event.target.closest(".nav-btn").classList.add("active", "bg-primary");
+                event.target.closest(".nav-btn").classList.remove("bg-gray-700");
+                
+                // Update content when switching tabs
+                if (tabName === 'kitchen') {
+                    renderOrders();
+                }
+            }
+
+            // Initialize game when page loads
+            window.onload = initGame;
+        </script>
+    </body>
+</html>
