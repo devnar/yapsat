@@ -62,9 +62,6 @@
                 <button onclick="switchTab('menu')" class="nav-btn w-10 h-10 bg-gray-700 rounded-lg flex items-center justify-center hover:bg-gray-600 transition-colors">
                     <span class="text-xl"><i class="bx bx-food-menu"></i></span>
                 </button>
-                <button onclick="switchTab('upgrades')" class="nav-btn w-10 h-10 bg-gray-700 rounded-lg flex items-center justify-center hover:bg-gray-600 transition-colors">
-                    <span class="text-xl"><i class="bx bx-diamond"></i></span>
-                </button>
             </div>
         </nav>
 
@@ -248,7 +245,7 @@
 
             // Add customer
             function addCustomer() {
-                const customerNames = ['Ahmet', 'Ayşe', 'Mehmet', 'Fatma', 'Ali', 'Zeynep', 'Mustafa', 'Elif'];
+                const customerNames = ['Ahmet', 'Ayşe', 'Mehmet', 'Fatma', 'Ali', 'Zeynep', 'Mustafa', 'Elif', "Arda", "Samet"];
                 const customer = {
                     id: Date.now(),
                     name: customerNames[Math.floor(Math.random() * customerNames.length)],
